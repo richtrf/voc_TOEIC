@@ -1,0 +1,119 @@
+<head>
+<script type="text/javascript" src="/site_media/jquery-1.3.2.min.js"></script>
+  <script>
+        
+        function ana(){
+            var anaTerm = $(this).attr("value")
+            var realans = $(this).parent().parent().parent().children('td').children('#ans').attr("name")
+            var realword = $(this).parent().parent().children('label').children('input[value="'+realans+'"]').parent().text()
+            
+            if (anaTerm == realans){
+                $(this).parent().parent().parent().children('td').children('#ans').html('<img src="/site_media/correct.png" width="16" height="16"> <font color=green class="stylishFont">Correct!</font>')
+            }
+            else {
+                $(this).parent().parent().parent().children('td').children('#ans').html('<img src="/site_media/wrong.png" width="18" height="18"> <font color=red class="stylishFont"> Try again!</font>')/*Answer:'+ realword + '</font>')*/ 
+            }
+
+  /* 
+            $.ajax({
+                url: "/analysis/",
+                dataType: "json",
+                data: {"qin": anaTerm}, 
+                error: function(xhr){
+                    alert("AJAX problem");
+                },
+                success: function(response){
+                    $('#msg').html(response[0]);
+
+                }
+            }); 
+            $('#msg').fadeIn();        
+        }
+            
+        function disappear(){
+            $('#msg').fadeOut();
+
+  */ 
+        }
+     
+        $(document).ready(function(e){
+            $("input:radio").bind('click', ana);
+                /*var index = parseInt(this.name.split('_')[1])
+                
+            /*$('a').bind('mouseover', ana);
+            /*$('a').bind('mouseout', disappear)*/
+        });         
+        </script>
+        
+
+<link href="/site_media/css_FAST.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+     
+    <table width="726" border="0" align="center" cellpadding="10">
+
+      <tr>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <img src="/site_media/edit.png" width="90" height="90" align="absmiddle" />
+    	<font face="Arial, Helvetica, sans-serif" color="#333333">
+    	<strong>&nbsp;&nbsp;&nbsp;<span class="stylishTitle">TOEIC Vocabulary</span></strong></font> 
+        </td>
+        <td>
+       <form id="form1" name="form1" method="post" action="/generate/">
+        <label>
+          <select name="itemno" class="stylishFont">
+            <option value="1">1 item</option>
+            <option value="5" selected="selected">5 items</option>
+            <option value="10">10 items</option>
+            <option value="15">15 items</option>
+            <option value="20">20 items</option>
+            <option value="30">30 items</option>
+          </select>
+          <input name="button" type="submit" class="stylishFont" id="button" value="Go!" />
+        </label>
+      </form>
+        
+        </td>
+      </tr>
+      <tr>
+        <td class="stylishFont"><br><strong>Please choose the word to complete the sentence:</strong><br></td>
+        <td></td>
+      </tr>  
+      
+      {% for A,B,C,D,Qpart,Ans in item%}
+      <tr>
+        <form>
+        <td width="479" class="stylishFont">
+       	{{Qpart|safe}}<br>
+        <label>
+	      <input type="radio" name="RadioGroup1" value="A" id="RadioGroup1_0" />
+	      {{A}}</label>
+	      <br>
+	    <label>
+	      <input type="radio" name="RadioGroup1" value="B" id="RadioGroup1_1" />
+	      {{B}}</label>
+          <br>
+	    <label>
+	      <input type="radio" name="RadioGroup1" value="C" id="RadioGroup1_2" />
+	      {{C}}</label>
+	      <br>
+	    <label>
+	      <input type="radio" name="RadioGroup1" value="D" id="RadioGroup1_3" />
+	      {{D}}</label>
+        </td>
+        <td width="201" valign="top">
+        <label id="ans" name={{Ans}}></label>
+        </td>
+        </form>
+      </tr>
+      <tr>
+      {% endfor %}
+      <td colspan="2" align="center"><br><br>
+        <span class="stylishFoot"><br>
+        <font color="#666666" size=1 class="stylishFoot">2010 (c) NTHU NLPlab</font></span></td>
+      </tr>
+      
+
+    </table>
+</body>
