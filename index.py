@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import sqlite3
 
 import os
-ROOT_PATH=os.path.dirname('__file__')
+ROOT_PATH=os.path.dirname(__file__)
 
 def input(request):
     return render_to_response("input.html")
